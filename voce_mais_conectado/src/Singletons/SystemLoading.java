@@ -23,7 +23,7 @@ public class SystemLoading {
 
     public void coursesLoading() {
         Courses englishCourse = new Courses("Curso Ingles", "10 horas", "Saber Portugues", "Credito/Débito", "Você vai aprender Ingles!!!");
-
+        coursesList.clear();
         coursesList.add(englishCourse);
     }
 
@@ -33,6 +33,7 @@ public class SystemLoading {
         Category personalImageCourses = new Category("Cursos de Imagem Pessoal", "Curso de Forma de se Vestir e Falar", coursesList);
         Category technologyCourses = new Category("Cursos de Tecnologia", "Curso de Tecnologias de Programação", coursesList);
 
+        categoryList.clear();
         categoryList.add(languageCourses);
         categoryList.add(technicalCourses);
         categoryList.add(personalImageCourses);

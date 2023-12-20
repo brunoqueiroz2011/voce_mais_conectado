@@ -1,4 +1,3 @@
-import Singletons.SystemLoading;
 import flow.Client.ClientFlow;
 import utils.PrintScreen;
 
@@ -6,104 +5,83 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        SystemLoading systemLoading = SystemLoading.getInstance();
-        systemLoading.coursesLoading();
-        systemLoading.categoryLoading();
-        systemLoading.clientLoading();
-
         while (true) {
-            PrintScreen.lineBreak("Olá, seja bem-vindo ao Você+Conectado!");
-            PrintScreen.lineBreak("Por favor, identifique-se, você é um cliente ou funcionário?");
-            PrintScreen.lineBreak("c -> Cliente");
-            PrintScreen.lineBreak("f -> Funcionario");
-            PrintScreen.lineBreak("s -> Sair");
-            PrintScreen.line("Digite sua opção:");
-            Character identification = scanner.next().toLowerCase().charAt(0);
+            homeGreeting();
 
-            if (identification.equals('c')) {
+            if (identificationUser('c')) {
+                ClientFlow.loadingData();
 
                 while (true) {
                     ClientFlow.ChooseArea();
-                    int optionCategory = scanner.nextInt();
-                    PrintScreen.lineWrap();
 
-                    ClientFlow.ChooseCourse(optionCategory);
-                    int optionCourse = scanner.nextInt();
-                    PrintScreen.lineWrap();
+                    ClientFlow.ChooseCourse();
 
-                    ClientFlow.viewInfoChosenCourse(optionCategory, optionCourse);
-                    PrintScreen.lineWrap();
+                    ClientFlow.viewInfoChosenCourse();
 
-                    PrintScreen.line("Você tem interesse em comprar? (S/N):");
-                    Character interest = scanner.next().toLowerCase().charAt(0);
-                    PrintScreen.lineWrap();
+                    if (ClientFlow.interestBuy()) {
 
-                    if (interest.equals('s')) {
-                        PrintScreen.line("Você já é cadastrado? (S/N):");
-                        Character isRegistered = scanner.next().toLowerCase().charAt(0);
-                        PrintScreen.lineWrap();
+                        if (ClientFlow.isRegistered()) {
 
-                        if (isRegistered.equals('s')) {
-                            PrintScreen.line("Login: ");
-                            String login = scanner.next();
-                            PrintScreen.line("Senha: ");
-                            String password = scanner.next();
-
-                            if (systemLoading.client.authentic(login, password)) {
-                                systemLoading.client.setIsLogin(true);
+                            if (ClientFlow.clientAuthentic()) {
                                 PrintScreen.lineBreak("Login realizado com sucesso!");
-                            }else{
+                            } else {
                                 PrintScreen.lineBreak("Houve um problema ao logar!");
+                                break;//Volta para o Inicio do Fluxo.
                             }
+                            PrintScreen.lineWrap();
 
                         } else {
-                            PrintScreen.line("Login: ");
-                            String login = scanner.next();
-                            PrintScreen.line("E-mail: ");
-                            String email = scanner.next();
-                            PrintScreen.line("Senha: ");
-                            String password = scanner.next();
-
-                            systemLoading.client.setLogin(login);
-                            systemLoading.client.setEmail(email);
-                            systemLoading.client.setPassword(password);
-                            systemLoading.client.setIsLogin(
-                                    systemLoading.client.authentic(login, password));
-
-                            PrintScreen.lineBreak("Seu cadastrado foi realizado com sucesso!");
+                            if (ClientFlow.clientRegistered())
+                                PrintScreen.lineBreak("Seu cadastrado foi realizado com sucesso!");
+                            else
+                                PrintScreen.lineBreak("Houve um problema ao Cadastrar!");
                         }
 
-                        if (systemLoading.client.isLogin()) {
+                        PrintScreen.lineWrap();
+
+                        if (ClientFlow.isLogin()) {
+
+                            ClientFlow.clientSalutation();
+
+                            ClientFlow.viewInfoChosenCourse();
                             PrintScreen.lineWrap();
-                            PrintScreen.lineBreak("Olá, " + systemLoading.client.getLogin() +
-                                    " , antes de concluir a compra confira as informações:");
 
-                            ClientFlow.viewInfoChosenCourse(optionCategory, optionCourse);
-                            PrintScreen.lineWrap();
-
-                            PrintScreen.line("Você tem interesse em comprar? (S/N):");
-                            interest = scanner.next().toLowerCase().charAt(0);
-
-                            if (interest.equals('s')) {
+                            if (ClientFlow.interestBuy()) {
                                 PrintScreen.lineBreak("Compra realizada com sucesso!");
                                 PrintScreen.lineBreak("A Você+Conectado agradece, tenha um ótimo dia e bons estudos!");
-                                PrintScreen.lineWrap();
                             } else {
                                 PrintScreen.clean();
                                 PrintScreen.lineBreak("Obrigado e Volte Sempre!");
                             }
+
+                            PrintScreen.lineWrap();
                         }
                     }
+
                     break;
                 }
 
-            } else if (identification.equals('f')) {
+            } else if (identificationUser('f')) {
                 PrintScreen.lineBreak("Funcionario");
             } else {
                 PrintScreen.lineBreak("Obrigado e volte sempre ao Você+Conectado!");
                 break;
             }
         }
+    }
+
+    public static void homeGreeting() {
+        PrintScreen.lineBreak("Olá, seja bem-vindo ao Você+Conectado!");
+        PrintScreen.lineBreak("Por favor, identifique-se, você é um cliente ou funcionário?");
+        PrintScreen.lineBreak("c -> Cliente");
+        PrintScreen.lineBreak("f -> Funcionario");
+        PrintScreen.lineBreak("s -> Sair");
+    }
+
+    public static Boolean identificationUser(Character value) {
+        Scanner scanner = new Scanner(System.in);
+        PrintScreen.line("Digite sua opção:");
+        Character identification = scanner.next().toLowerCase().charAt(0);
+        return identification.equals(value);
     }
 }
