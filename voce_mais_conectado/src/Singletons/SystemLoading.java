@@ -3,6 +3,7 @@ package Singletons;
 import entities.Category;
 import entities.Client;
 import entities.Courses;
+import entities.Employee;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ public class SystemLoading {
     public List<Courses> coursesList = new ArrayList<>();
     public List<Category> categoryList = new ArrayList<>();
     public Client client = new Client();
+    public Employee employee = new Employee();
 
     public static SystemLoading getInstance() {
         if (instance == null) {
@@ -45,5 +47,10 @@ public class SystemLoading {
         client.setEmail("admin@gmail.com");
         client.setPassword("1234");
         client.setIsLogin(false);
+    }
+
+    public void employeerLoading(){
+        employee.setLogin("admin");
+        employee.setPassword("1234");
     }
 }

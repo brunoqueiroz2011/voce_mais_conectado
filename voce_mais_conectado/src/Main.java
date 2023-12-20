@@ -1,4 +1,5 @@
-import flow.Client.ClientFlow;
+import flow.ClientFlow;
+import flow.EmployeeFlow;
 import utils.PrintScreen;
 
 import java.util.Scanner;
@@ -62,7 +63,15 @@ public class Main {
                 }
 
             } else if (identificationUser('f')) {
-                PrintScreen.lineBreak("Funcionario");
+                EmployeeFlow.employeeSalutation();
+
+                if (EmployeeFlow.employeeAuthentic()) {
+                    PrintScreen.lineBreak("Login realizado com sucesso!");
+                } else {
+                    PrintScreen.lineBreak("Houve um problema ao logar!");
+                    break;//Volta para o Inicio do Fluxo.
+                }
+                PrintScreen.lineWrap();
             } else {
                 PrintScreen.lineBreak("Obrigado e volte sempre ao Você+Conectado!");
                 break;

@@ -1,4 +1,4 @@
-package flow.Client;
+package flow;
 
 import Singletons.SystemLoading;
 import entities.Client;
@@ -12,7 +12,6 @@ public class ClientFlow extends Flow {
 
     static int optionCategory;
     static int optionCourse;
-    static Character interest, isRegistered;
 
     public static void loadingData(){
         systemLoading.coursesLoading();
@@ -52,7 +51,7 @@ public class ClientFlow extends Flow {
 
     public static Boolean interestBuy() {
         PrintScreen.line("Você tem interesse em comprar? (S/N):");
-        interest = scanner.next().toLowerCase().charAt(0);
+        Character interest = scanner.next().toLowerCase().charAt(0);
         PrintScreen.lineWrap();
         return interest.equals('s');
     }
