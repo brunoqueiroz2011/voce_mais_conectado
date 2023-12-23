@@ -1,29 +1,28 @@
 package flow;
 
+import Singletons.SaveDataMemory;
 import Singletons.SystemLoading;
-import entities.Client;
-import entities.User;
-import flow.Flow;
 import utils.PrintScreen;
 
 import java.util.Scanner;
 
-public class ClientFlow extends Flow {
+public class ClientFlow{
 
+    static Scanner scanner = new Scanner(System.in);
+    static SystemLoading systemLoading = SystemLoading.getInstance();
+    static SaveDataMemory dataMemory = SaveDataMemory.getInstance();
     static int optionCategory;
     static int optionCourse;
 
     public static void loadingData(){
-        systemLoading.coursesLoading();
-        systemLoading.categoryLoading();
         systemLoading.clientLoading();
     }
 
     public static void ChooseArea() {
         PrintScreen.lineBreak("Escolha uma área:");
-        for (int index = 0; index < systemLoading.categoryList.size(); index++) {
+        for (int index = 0; index < dataMemory.categoryList.size(); index++) {
             PrintScreen.line(index + " - ");
-            PrintScreen.lineBreak(systemLoading.categoryList.get(index).getName());
+            PrintScreen.lineBreak(dataMemory.categoryList.get(index).getName());
         }
         PrintScreen.line("Digite sua opção:");
         optionCategory = scanner.nextInt();
@@ -31,9 +30,9 @@ public class ClientFlow extends Flow {
     }
 
     public static void ChooseCourse() {
-        for (int index = 0; index < systemLoading.categoryList.get(optionCategory).getCoursesList().size(); index++) {
+        for (int index = 0; index < dataMemory.categoryList.get(optionCategory).getCoursesList().size(); index++) {
             PrintScreen.line(index + " - ");
-            PrintScreen.lineBreak(systemLoading.categoryList.get(optionCategory).getCoursesList().get(index).getCourseName());
+            PrintScreen.lineBreak(dataMemory.categoryList.get(optionCategory).getCoursesList().get(index).getCourseName());
         }
         PrintScreen.line("Digite sua opção do curso escolhido:");
         optionCourse = scanner.nextInt();
@@ -41,9 +40,9 @@ public class ClientFlow extends Flow {
     }
 
     public static void viewInfoChosenCourse() {
-        for (int index = 0; index < systemLoading.categoryList.get(optionCategory).getCoursesList().size(); index++) {
+        for (int index = 0; index < dataMemory.categoryList.get(optionCategory).getCoursesList().size(); index++) {
             if (index == optionCourse) {
-                PrintScreen.lineBreak(systemLoading.categoryList.get(optionCategory).getCoursesList().get(index).toString());
+                PrintScreen.lineBreak(dataMemory.categoryList.get(optionCategory).getCoursesList().get(index).toString());
             }
         }
         PrintScreen.lineWrap();

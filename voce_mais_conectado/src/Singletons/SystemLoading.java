@@ -30,10 +30,10 @@ public class SystemLoading {
     }
 
     public void categoryLoading() {
-        Category languageCourses = new Category("Cursos de Idiomas", "Curso de lingagem estrangeiras", coursesList);
-        Category technicalCourses = new Category("Cursos de Técnicos", "Curso de Areas de Formação", coursesList);
-        Category personalImageCourses = new Category("Cursos de Imagem Pessoal", "Curso de Forma de se Vestir e Falar", coursesList);
-        Category technologyCourses = new Category("Cursos de Tecnologia", "Curso de Tecnologias de Programação", coursesList);
+        Category languageCourses = new Category("Cursos de Idiomas", "Curso de lingagem estrangeiras");
+        Category technicalCourses = new Category("Cursos de Técnicos", "Curso de Areas de Formação");
+        Category personalImageCourses = new Category("Cursos de Imagem Pessoal", "Curso de Forma de se Vestir e Falar");
+        Category technologyCourses = new Category("Cursos de Tecnologia", "Curso de Tecnologias de Programação");
 
         categoryList.clear();
         categoryList.add(languageCourses);

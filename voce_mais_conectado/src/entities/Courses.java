@@ -16,6 +16,9 @@ public class Courses {
         this.description = description;
     }
 
+    public Courses() {
+    }
+
     @Override
     public String toString() {
         return "- Nome do Curso: '" + courseName + '\'' +

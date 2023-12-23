@@ -1,17 +1,17 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Category {
 
     String name;
     String description;
-    List<Courses> coursesList;
+    List<Courses> coursesList = new ArrayList<>();;
 
-    public Category(String name, String description, List<Courses> coursesList) {
+    public Category(String name, String description) {
         this.name = name;
         this.description = description;
-        this.coursesList = coursesList;
     }
 
     public String getName() {
@@ -34,7 +34,7 @@ public class Category {
         return coursesList;
     }
 
-    public void setCoursesList(List<Courses> coursesList) {
-        this.coursesList = coursesList;
+    public void setCoursesList(Courses course) {
+        this.coursesList.add(course);
     }
 }

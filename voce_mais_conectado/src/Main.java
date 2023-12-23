@@ -1,3 +1,4 @@
+import Singletons.SaveDataMemory;
 import flow.ClientFlow;
 import flow.EmployeeFlow;
 import utils.PrintScreen;
@@ -6,10 +7,16 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        if (SaveDataMemory.getInstance().categoryList.isEmpty())
+            SaveDataMemory.getInstance().insertCategoryDefault();
+
         while (true) {
             homeGreeting();
+            Scanner scanner = new Scanner(System.in);
+            PrintScreen.line("Digite sua opção:");
+            Character identification = scanner.next().toLowerCase().charAt(0);
 
-            if (identificationUser('c')) {
+            if (identification.equals('c')) {
                 ClientFlow.loadingData();
 
                 while (true) {
@@ -62,11 +69,35 @@ public class Main {
                     break;
                 }
 
-            } else if (identificationUser('f')) {
-                EmployeeFlow.employeeSalutation();
+            } else if (identification.equals('f')) {
+
+                EmployeeFlow.loadingData();
 
                 if (EmployeeFlow.employeeAuthentic()) {
                     PrintScreen.lineBreak("Login realizado com sucesso!");
+                    PrintScreen.lineWrap();
+                    EmployeeFlow.employeeSalutation();
+
+                    int optionOperation = EmployeeFlow.choiceOperation();
+                    switch (optionOperation) {
+                        case 1:
+                            EmployeeFlow.chooseArea();
+                            EmployeeFlow.createNewCourse();
+                            break;
+                        case 2:
+                        case 3:
+                            EmployeeFlow.chooseArea();
+                            EmployeeFlow.chooseCourse();
+                            break;
+                        default:
+                            PrintScreen.lineBreak("Opção escolhida não exite!!!");
+                    }
+
+                    if (optionOperation == 2)
+                        EmployeeFlow.updateCourse();
+                    else
+                        EmployeeFlow.deleteCourse();
+
                 } else {
                     PrintScreen.lineBreak("Houve um problema ao logar!");
                     break;//Volta para o Inicio do Fluxo.
@@ -85,12 +116,5 @@ public class Main {
         PrintScreen.lineBreak("c -> Cliente");
         PrintScreen.lineBreak("f -> Funcionario");
         PrintScreen.lineBreak("s -> Sair");
-    }
-
-    public static Boolean identificationUser(Character value) {
-        Scanner scanner = new Scanner(System.in);
-        PrintScreen.line("Digite sua opção:");
-        Character identification = scanner.next().toLowerCase().charAt(0);
-        return identification.equals(value);
     }
 }
